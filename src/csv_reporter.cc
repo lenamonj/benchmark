@@ -125,7 +125,9 @@ void CSVReporter::PrintRunData(const Run& run) {
   }
   Out << ",";
 
-  if (run.run_type != Run::RT_Aggregate ||
+  // ComputeBigO stores the RMS pre-divided by the time unit multiplier; the
+  // GetAdjusted*Time() accessors undo that, as the other reporters rely on.
+  if (run.report_rms || run.run_type != Run::RT_Aggregate ||
       run.aggregate_unit == StatisticUnit::kTime) {
     Out << run.GetAdjustedRealTime() << ",";
     Out << run.GetAdjustedCPUTime() << ",";
