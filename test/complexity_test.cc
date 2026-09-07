@@ -21,16 +21,14 @@ int AddComplexityTest(const std::string& test_name,
                       const std::string& big_o_test_name,
                       const std::string& rms_test_name,
                       const std::string& big_o, int family_index,
-                      const std::string& time_unit,
-                      const std::string& csv_rms) {
+                      const std::string& time_unit) {
   SetSubstitutions({{"%name", test_name},
                     {"%bigo_name", big_o_test_name},
                     {"%rms_name", rms_test_name},
                     {"%bigo_str", "[ ]* %float " + big_o},
                     {"%bigo", big_o},
                     {"%rms", "[ ]*[0-9]+ %"},
-                    {"%unit", time_unit},
-                    {"%csvrms", csv_rms}});
+                    {"%unit", time_unit}});
   AddCases(
       TC_ConsoleOut,
       {{"^%bigo_name %bigo_str %bigo_str[ ]*$"},
@@ -65,7 +63,7 @@ int AddComplexityTest(const std::string& test_name,
        {"}", MR_Next}});
   AddCases(TC_CSVOut, {{"^\"%bigo_name\",,%float,%float,%bigo,,,,,$"},
                        {"^\"%bigo_name\"", MR_Not},
-                       {"^\"%rms_name\",,%csvrms,%float,,,,,,$", MR_Next}});
+                       {"^\"%rms_name\",,%float,%float,,,,,,$", MR_Next}});
   return 0;
 }
 
@@ -108,15 +106,15 @@ constexpr char lambda_big_o_1[] = "f\\(N\\)";
 
 // Add enum tests
 ADD_COMPLEXITY_CASES(one_test_name, big_o_1_test_name, rms_o_1_test_name,
-                     enum_auto_big_o_1, /*family_index=*/0, "ns", "%float");
+                     enum_auto_big_o_1, /*family_index=*/0, "ns");
 
 // Add auto tests
 ADD_COMPLEXITY_CASES(one_test_name, big_o_1_test_name, rms_o_1_test_name,
-                     enum_auto_big_o_1, /*family_index=*/1, "ns", "%float");
+                     enum_auto_big_o_1, /*family_index=*/1, "ns");
 
 // Add lambda tests
 ADD_COMPLEXITY_CASES(one_test_name, big_o_1_test_name, rms_o_1_test_name,
-                     lambda_big_o_1, /*family_index=*/2, "ns", "%float");
+                     lambda_big_o_1, /*family_index=*/2, "ns");
 
 // ========================================================================= //
 // --------------------------- Testing BigO O(N) --------------------------- //
@@ -165,15 +163,15 @@ constexpr char lambda_big_o_n[] = "f\\(N\\)";
 
 // Add enum tests
 ADD_COMPLEXITY_CASES(n_test_name, big_o_n_test_name, rms_o_n_test_name,
-                     enum_auto_big_o_n, /*family_index=*/3, "ns", "%float");
+                     enum_auto_big_o_n, /*family_index=*/3, "ns");
 
 // Add auto tests
 ADD_COMPLEXITY_CASES(n_test_name, big_o_n_test_name, rms_o_n_test_name,
-                     enum_auto_big_o_n, /*family_index=*/4, "ns", "%float");
+                     enum_auto_big_o_n, /*family_index=*/4, "ns");
 
 // Add lambda tests
 ADD_COMPLEXITY_CASES(n_test_name, big_o_n_test_name, rms_o_n_test_name,
-                     lambda_big_o_n, /*family_index=*/5, "ns", "%float");
+                     lambda_big_o_n, /*family_index=*/5, "ns");
 
 // ========================================================================= //
 // ------------------------- Testing BigO O(NlgN) ------------------------- //
@@ -226,17 +224,17 @@ constexpr char lambda_big_o_n_lg_n[] = "f\\(N\\)";
 // Add enum tests
 ADD_COMPLEXITY_CASES(n_lg_n_test_name, big_o_n_lg_n_test_name,
                      rms_o_n_lg_n_test_name, enum_auto_big_o_n_lg_n,
-                     /*family_index=*/6, "ns", "%float");
+                     /*family_index=*/6, "ns");
 
 // NOTE: auto big-o is wron.g
 ADD_COMPLEXITY_CASES(n_lg_n_test_name, big_o_n_lg_n_test_name,
                      rms_o_n_lg_n_test_name, enum_auto_big_o_n_lg_n,
-                     /*family_index=*/7, "ns", "%float");
+                     /*family_index=*/7, "ns");
 
 //// Add lambda tests
 ADD_COMPLEXITY_CASES(n_lg_n_test_name, big_o_n_lg_n_test_name,
                      rms_o_n_lg_n_test_name, lambda_big_o_n_lg_n,
-                     /*family_index=*/8, "ns", "%float");
+                     /*family_index=*/8, "ns");
 
 // ========================================================================= //
 // -------- Testing formatting of Complexity with captured args ------------ //
@@ -269,7 +267,7 @@ const std::string complexity_capture_name =
 
 ADD_COMPLEXITY_CASES(complexity_capture_name, complexity_capture_name + "_BigO",
                      complexity_capture_name + "_RMS", "N",
-                     /*family_index=*/9, "ns", "%float");
+                     /*family_index=*/9, "ns");
 // ========================================================================= //
 // ------------------- Testing BigO with a declared unit ------------------- //
 // ========================================================================= //
@@ -295,8 +293,7 @@ constexpr char big_o_n_ms_test_name[] = "BM_Complexity_O_N_ms/manual_time_BigO";
 constexpr char rms_o_n_ms_test_name[] = "BM_Complexity_O_N_ms/manual_time_RMS";
 
 ADD_COMPLEXITY_CASES(n_ms_test_name, big_o_n_ms_test_name, rms_o_n_ms_test_name,
-                     enum_auto_big_o_n, /*family_index=*/10, "ms",
-                     "0[.][0-9]+");
+                     enum_auto_big_o_n, /*family_index=*/10, "ms");
 
 }  // end namespace
 
